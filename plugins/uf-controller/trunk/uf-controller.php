@@ -10,6 +10,6 @@ Author URI: http://www.webadmin.ufl.edu/
 
 define('UF_CONTROLLER_PLUGIN_BASE', dirname(__FILE__) . '/');
 
-require_once('controllers/class.UfController.php');
-require_once('controllers/class.UfAdminController.php');
+require_once('lib/class.UfController.php');
+require_once('lib/class.UfAdminController.php');
 ?>
