@@ -1,12 +1,12 @@
 <?php
-require_once('class.UfNewsController.php');
+require_once('class.UfController.php');
 
 /*
- * Controller for the UF News administration section.
+ * Controller for the administration section.
  */
-if (! class_exists('UfNewsAdminController')) {
-	class UfNewsAdminController extends UfNewsController {
-		function UfNewsAdminController() {
+if (! class_exists('UfAdminController')) {
+	class UfAdminController extends UfController {
+		function UfAdminController() {
 			$args = func_get_args();
 			parent::_init($args);
 		}

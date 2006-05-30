@@ -10,6 +10,10 @@ Author URI: http://www.webadmin.ufl.edu/
 
 define('UF_CONTROLLER_PLUGIN_BASE', dirname(__FILE__) . '/');
 
-require_once('lib/class.UfController.php');
+/*
+ * Required files for the controller framework; other plugins can include stuff
+ * from lib as appropriate
+ */
 require_once('lib/class.UfAdminController.php');
+require_once('lib/class.UfController.php');
 ?>
