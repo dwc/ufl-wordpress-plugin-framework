@@ -9,7 +9,7 @@ Author URI: http://www.webadmin.ufl.edu/
 */
 
 define('UF_PLUGIN_FRAMEWORK_BASE', dirname(__FILE__) . '/');
-define('UF_PLUGIN_FRAMEWORK_LIBRARY', UF_PLUGIN_FRAMEWORK_BASE . '/lib');
+define('UF_PLUGIN_FRAMEWORK_LIBRARY', UF_PLUGIN_FRAMEWORK_BASE . '/lib/');
 
 /*
  * Required files for the framework; other plugins can require stuff
