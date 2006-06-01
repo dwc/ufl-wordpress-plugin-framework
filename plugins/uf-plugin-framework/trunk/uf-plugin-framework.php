@@ -32,7 +32,7 @@ function uf_plugin_framework_init() {
 				auth_redirect();
 			}
 			else {
-				exit('UF Plugin Framework: Unable to redirect for authentication');
+				die('UF Plugin Framework: Unable to redirect for authentication');
 			}
 		}
 
@@ -46,7 +46,7 @@ function uf_plugin_framework_init() {
 		}
 
 		do_action($action_name);
-		exit('UF Plugin Framework: Finished');
+		die('UF Plugin Framework: Finished');
 	}
 }
 
