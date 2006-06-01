@@ -8,14 +8,14 @@ Author: Daniel Westermann-Clark
 Author URI: http://www.webadmin.ufl.edu/
 */
 
-define('UF_PLUGIN_FRAMEWORK_PLUGIN_BASE', dirname(__FILE__) . '/');
-define('UF_PLUGIN_FRAMEWORK_PLUGIN_LIBRARY', UF_PLUGIN_FRAMEWORK_PLUGIN_BASE . '/lib');
+define('UF_PLUGIN_FRAMEWORK_BASE', dirname(__FILE__) . '/');
+define('UF_PLUGIN_FRAMEWORK_LIBRARY', UF_PLUGIN_FRAMEWORK_BASE . '/lib');
 
 /*
  * Required files for the framework; other plugins can require stuff
  * as appropriate.
  */
-require_once(UF_PLUGIN_FRAMEWORK_PLUGIN_LIBRARY . '/class.UfUtilities.php');
+require_once(UF_PLUGIN_FRAMEWORK_LIBRARY . '/class.UfUtilities.php');
 
 /*
  * Bootstrap the framework.
