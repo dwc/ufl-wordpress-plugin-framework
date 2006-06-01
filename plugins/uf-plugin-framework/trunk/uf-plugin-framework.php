@@ -36,8 +36,16 @@ function uf_plugin_framework_init() {
 			}
 		}
 
-		$the_action = UfUtilities::get_action_name($uf_plugin_framework_plugin, $uf_plugin_framework_action);
-		do_action($the_action);
+		$action_name = UfUtilities::get_action_name($uf_plugin_framework_plugin, $uf_plugin_framework_action);
+
+		if ($_REQUEST['uf_plugin_framework_debug']) {
+			global $wp_filter;
+
+			print_r($wp_filter);
+			print "action_name = [$action_name]";
+		}
+
+		do_action($action_name);
 		exit('UF Plugin Framework: Finished');
 	}
 }
