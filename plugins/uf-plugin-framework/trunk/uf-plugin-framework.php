@@ -5,7 +5,7 @@ Version: 1.0
 Plugin URI: http://www.webadmin.ufl.edu/
 Description: Generic plugin framework for WordPress sites at the University of Florida.
 Author: Daniel Westermann-Clark
-Author URI: http://www.webadmin.ufl.edu/
+Author URI: http://dev.webadmin.ufl.edu/~dwc/
 */
 
 define('UF_PLUGIN_FRAMEWORK_BASE', dirname(__FILE__) . '/');
