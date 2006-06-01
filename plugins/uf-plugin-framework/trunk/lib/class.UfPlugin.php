@@ -80,7 +80,7 @@ if (! class_exists('UfPlugin')) {
 				add_action($callback, array(&$controller, "handle_${action_name}_action"));
 			}
 			else {
-				die("Controller must be an object");
+				die('Controller must be an object');
 			}
 		}
 
@@ -134,7 +134,7 @@ if (! class_exists('UfPlugin')) {
 		function admin_head() {
 			$files = array(
 				'plugin.css' => '<style type="text/css" media="screen">__DATA__</style>',
-				'plugin.js'   => '<script type="text/javascript">__DATA__</script>',
+				'plugin.js'  => '<script type="text/javascript">__DATA__</script>',
 			);
 
 			foreach ($files as $file => $html) {
