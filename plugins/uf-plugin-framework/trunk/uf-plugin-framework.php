@@ -56,6 +56,6 @@ function uf_plugin_framework_is_admin_request() {
 }
 
 function uf_plugin_framework_uri() {
-	bloginfo('url');
+	return get_bloginfo('url') . '/index.php';
 }
 ?>
