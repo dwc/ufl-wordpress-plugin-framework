@@ -23,8 +23,8 @@ require_once(UF_PLUGIN_FRAMEWORK_LIBRARY . '/class.UfUtilities.php');
 add_action('init', 'uf_plugin_framework_init');
 
 function uf_plugin_framework_init() {
-	$uf_plugin_framework_plugin = get_query_var('uf_plugin_framework_plugin');
-	$uf_plugin_framework_action = get_query_var('uf_plugin_framework_action');
+	$uf_plugin_framework_plugin = $_REQUEST['uf_plugin_framework_plugin'];
+	$uf_plugin_framework_action = $_REQUEST['uf_plugin_framework_action'];
 
 	if ($uf_plugin_framework_plugin and $uf_plugin_framework_action) {
 		if (uf_plugin_framework_is_admin_request()) {
