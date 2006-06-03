@@ -57,7 +57,7 @@ if (! class_exists('UfOptionsPage')) {
     </fieldset>
 <?php endforeach; ?>
     <input type="hidden" name="action" value="update" />
-    <input type="hidden" name="page_options" value="'<?php echo implode("','", $page_options); ?>'" />
+    <input type="hidden" name="page_options" value="<?php echo implode(",", $page_options); ?>" />
     <p class="submit">
       <input type="submit" name="Submit" value="<?php _e('Update Options'); ?> &raquo;" />
     </p>
