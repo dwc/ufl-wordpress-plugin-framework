@@ -56,6 +56,9 @@ if (! class_exists('UfOptionsPage')) {
       </table>
     </fieldset>
 <?php endforeach; ?>
+
+    <?php if (function_exists('wp_nonce_field')): wp_nonce_field('update-options'); endif; ?>
+
     <input type="hidden" name="action" value="update" />
     <input type="hidden" name="page_options" value="<?php echo implode(",", $page_options); ?>" />
     <p class="submit">
