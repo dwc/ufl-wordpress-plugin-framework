@@ -49,6 +49,19 @@ if (! class_exists('UfPlugin')) {
 		}
 
 		/*
+		 * Ensure the specified directory exists in the
+		 * wp-content directory and return the full path.
+		 */
+		function make_content_directory($directory_name) {
+			$path = ABSPATH . "wp-content/$directory_name/";
+			if (! wp_mkdir_p($path)) {
+				die('Error creating content directory');
+			}
+
+			return $path;
+		}
+
+		/*
 		 * Return the WordPress action name for the specified
 		 * plugin's action.
 		 */
