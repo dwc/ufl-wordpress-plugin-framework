@@ -51,7 +51,7 @@ if (! class_exists('UfOptionsPage')) {
         <tr>
           <th width="33%" scope="row" valign="top"><label for="<?php echo htmlspecialchars($option->name); ?>"><?php echo htmlspecialchars($option->description); ?></label></th>
           <td>
-<?php         $option_value = get_settings($option->name); ?>
+<?php         $option_value = get_option($option->name); ?>
 <?php         if (strpos($option_value, "\n") === false): ?>
             <input type="text" name="<?php echo htmlspecialchars($option->name); ?>" id="<?php echo htmlspecialchars($option->name); ?>" value="<?php echo htmlspecialchars($option_value); ?>" size="30" /><?php echo htmlspecialchars($option->units ? ' ' . $option->units : ''); ?>
 <?php         else: ?>
