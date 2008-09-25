@@ -43,25 +43,13 @@ if (! class_exists('UfOptionsPage')) {
 ?>
   <form method="post" action="options.php">
 <?php foreach ($this->option_groups as $option_group): ?>
-    <fieldset class="options">
-      <legend><?php _e($option_group->name); ?></legend>
-      <table width="100%" cellspacing="2" cellpadding="5" class="editform">
+    <h3><?php echo htmlspecialchars($option_group->name); ?></h3>
+    <table class="form-table">
 <?php     foreach ($option_group->options as $option): ?>
 <?php         $page_options[] = $option->name; ?>
-        <tr>
-          <th width="33%" scope="row" valign="top"><label for="<?php echo htmlspecialchars($option->name); ?>"><?php echo htmlspecialchars($option->description); ?></label></th>
-          <td>
-<?php         $option_value = get_option($option->name); ?>
-<?php         if (strpos($option_value, "\n") === false): ?>
-            <input type="text" name="<?php echo htmlspecialchars($option->name); ?>" id="<?php echo htmlspecialchars($option->name); ?>" value="<?php echo htmlspecialchars($option_value); ?>" size="30" /><?php echo htmlspecialchars($option->units ? ' ' . $option->units : ''); ?>
-<?php         else: ?>
-            <textarea name="<?php echo htmlspecialchars($option->name); ?>" id="<?php echo htmlspecialchars($option->name); ?>" rows="10" cols="40"><?php echo htmlspecialchars($option_value); ?></textarea>
-<?php         endif; ?>
-          </td>
-        </tr>
+<?php         $this->display_option($option); ?>
 <?php     endforeach; ?>
-      </table>
-    </fieldset>
+    </table>
 <?php endforeach; ?>
 
     <?php if (function_exists('wp_nonce_field')): wp_nonce_field('update-options'); endif; ?>
@@ -72,6 +60,26 @@ if (! class_exists('UfOptionsPage')) {
       <input type="submit" name="Submit" value="<?php _e('Update Options'); ?> &raquo;" />
     </p>
   </form>
+<?php
+		}
+
+		function display_option($option) {
+?>
+      <tr valign="top">
+        <th scope="row"><label for="<?php echo htmlspecialchars($option->name); ?>"><?php echo htmlspecialchars($option->description); ?></label></th>
+        <td>
+<?php         $option_value = get_option($option->name); ?>
+<?php         if (strpos($option_value, "\n") === false): ?>
+          <input type="text" name="<?php echo htmlspecialchars($option->name); ?>" id="<?php echo htmlspecialchars($option->name); ?>" value="<?php echo htmlspecialchars($option_value); ?>" size="40" /><?php echo htmlspecialchars($option->units ? ' ' . $option->units : ''); ?>
+<?php         else: ?>
+          <textarea name="<?php echo htmlspecialchars($option->name); ?>" id="<?php echo htmlspecialchars($option->name); ?>" rows="10" cols="40"><?php echo htmlspecialchars($option_value); ?></textarea>
+<?php         endif; ?>
+<?php         if ($option->default_value): ?>
+          <br />
+          Default is <code><?php echo htmlspecialchars($option->default_value); ?>
+<?php         endif; ?>
+        </td>
+      </tr>
 <?php
 		}
 	}
