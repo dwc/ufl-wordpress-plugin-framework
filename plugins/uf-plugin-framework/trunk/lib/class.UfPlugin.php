@@ -17,7 +17,7 @@ if (! class_exists('UfPlugin')) {
 		var $tables;
 
 		function UfPlugin($name, $plugin_file) {
-			$this->name        = $name;
+			$this->name = $name;
 			$this->plugin_file = $plugin_file;
 
 			$this->add_plugin_hooks();
@@ -32,9 +32,8 @@ if (! class_exists('UfPlugin')) {
 		 * Attach to WordPress plugin hooks (actions and filters).
 		 */
 		function add_plugin_hooks() {
-			if (isset($_GET['activate']) and $_GET['activate'] == 'true') {
-				add_action('init', array(&$this, 'init'));
-			}
+			register_activation_hook($this->plugin_file, array(&$this, 'activate'));
+			register_deactivation_hook($this->plugin_file, array(&$this, 'deactivate'));
 
 			add_action('admin_head', array(&$this, 'admin_head'));
 			add_action('admin_menu', array(&$this, 'admin_menu'));
@@ -115,30 +114,29 @@ if (! class_exists('UfPlugin')) {
 		 * Install this plugin, creating any database tables and
 		 * options.
 		 */
-		function init() {
-			global $user_level;
+		function activate() {
+			if (current_user_can('activate_plugins')) {
+				if ($this->options_page) {
+					$options = $this->options_page->option_groups;
+					if (is_array($options) and count($options) > 0) {
+						UfOptionUtilities::add_options($options);
+					}
+				}
 
-			get_currentuserinfo();
-			if ($user_level < 8) {
-				return false;
-			}
+				if ($this->tables) {
+					require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
 
-			if ($this->options_page) {
-				$options = $this->options_page->option_groups;
-				if (is_array($options) and count($options) > 0) {
-					UfOptionUtilities::add_options($options);
+					foreach ($this->tables as $table_name => $sql) {
+						maybe_create_table($table_name, $sql);
+					}
 				}
 			}
+		}
 
-			if ($this->tables) {
-				require_once(ABSPATH . 'wp-admin/upgrade-functions.php');
-
-				foreach ($this->tables as $table_name => $sql) {
-					maybe_create_table($table_name, $sql);
-				}
-			}
-
-			return true;
+		/*
+		 * Uninstall this plugin. By default, a no-op.
+		 */
+		function deactivate() {
 		}
 
 		/*
@@ -162,14 +160,12 @@ if (! class_exists('UfPlugin')) {
 		 * Add the menu tabs for this plugin.
 		 */
 		function admin_menu() {
-			$title = __($this->name);
-
 			if ($this->options_page) {
-				add_options_page($title, $title, $this->options_page->level, $this->plugin_file, array(&$this->options_page, 'display'));
+				add_options_page($this->name, $this->name, $this->options_page->capability, $this->plugin_file, array(&$this->options_page, 'display'));
 			}
 
 			if ($this->management_page) {
-				add_management_page($title, $title, $this->management_page->level, $this->plugin_file, array(&$this->management_page, 'display'));
+				add_management_page($this->name, $this->name, $this->management_page->capability, $this->plugin_file, array(&$this->management_page, 'display'));
 			}
 		}
 	}

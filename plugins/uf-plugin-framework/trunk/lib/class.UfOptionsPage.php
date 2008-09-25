@@ -7,13 +7,13 @@ if (! class_exists('UfOptionsPage')) {
 		var $title;
 		var $description;
 		var $option_groups;
-		var $level;
+		var $capability;
 
-		function UfOptionsPage($title, $description = '', $option_groups = array(), $level = 8) {
+		function UfOptionsPage($title, $description = '', $option_groups = array(), $capability = 'manage_options') {
 			$this->title = $title;
 			$this->description = $description;
 			$this->option_groups = $option_groups;
-			$this->level = $level;
+			$this->capability = $capability;
 		}
 
 		function display() {

@@ -6,12 +6,12 @@ if (! class_exists('UfManagementPage')) {
 	class UfManagementPage {
 		var $title;
 		var $description;
-		var $level;
+		var $capability;
 
-		function UfManagementPage($title, $description = '', $level = 3) {
+		function UfManagementPage($title, $description = '', $capability = 'edit_posts') {
 			$this->title = $title;
 			$this->description = $description;
-			$this->level = $level;
+			$this->capability = $capability;
 		}
 
 		function display() {
