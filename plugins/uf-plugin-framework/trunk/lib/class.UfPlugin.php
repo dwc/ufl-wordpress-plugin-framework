@@ -32,7 +32,9 @@ if (! class_exists('UfPlugin')) {
 		 * Attach to WordPress plugin hooks (actions and filters).
 		 */
 		function add_plugin_hooks() {
-			register_activation_hook($this->plugin_file, array(&$this, 'activate'));
+			if (isset($_GET['activate']) and $_GET['activate'] == 'true') {
+				add_action('init', array(&$this, 'init'));
+			}
 			register_deactivation_hook($this->plugin_file, array(&$this, 'deactivate'));
 
 			add_action('admin_head', array(&$this, 'admin_head'));
@@ -114,7 +116,7 @@ if (! class_exists('UfPlugin')) {
 		 * Install this plugin, creating any database tables and
 		 * options.
 		 */
-		function activate() {
+		function init() {
 			if (current_user_can('activate_plugins')) {
 				if ($this->options_page) {
 					$options = $this->options_page->option_groups;
