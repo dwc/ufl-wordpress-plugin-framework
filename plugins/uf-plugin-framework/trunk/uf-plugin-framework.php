@@ -47,7 +47,7 @@ function uf_plugin_framework_init() {
 		}
 
 		do_action($action_name);
-		die('UF Plugin Framework: Finished');
+		die('');
 	}
 }
 
