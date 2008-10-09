@@ -75,8 +75,9 @@ if (! class_exists('UfOptionsPage')) {
           <textarea name="<?php echo htmlspecialchars($option->name); ?>" id="<?php echo htmlspecialchars($option->name); ?>" rows="10" cols="40"><?php echo htmlspecialchars($option_value); ?></textarea>
 <?php         endif; ?>
 <?php         if ($option->default_value): ?>
+
           <br />
-          Default is <code><?php echo htmlspecialchars($option->default_value); ?>
+          Default is <code><?php echo htmlspecialchars($option->default_value); ?></code>
 <?php         endif; ?>
         </td>
       </tr>
