@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: UF Plugin Framework
-Version: 1.0
+Version: 2.0
 Plugin URI: http://www.webadmin.ufl.edu/
 Description: Generic plugin framework for WordPress sites at the University of Florida.
 Author: Daniel Westermann-Clark
@@ -28,13 +28,8 @@ function uf_plugin_framework_init() {
 	$uf_plugin_framework_action = $_REQUEST['uf_plugin_framework_action'];
 
 	if ($uf_plugin_framework_plugin and $uf_plugin_framework_action) {
-		if (uf_plugin_framework_is_admin_request()) {
-			if (function_exists('auth_redirect')) {
-				auth_redirect();
-			}
-			else {
-				die('UF Plugin Framework: Unable to redirect for authentication');
-			}
+		if (is_admin()) {
+			check_admin_referer($uf_plugin_framework_plugin . '-' . $uf_plugin_framework_action);
 		}
 
 		$action_name = UfUtilities::get_action_name($uf_plugin_framework_plugin, $uf_plugin_framework_action);
@@ -51,11 +46,25 @@ function uf_plugin_framework_init() {
 	}
 }
 
-function uf_plugin_framework_is_admin_request() {
-	return (strstr($_SERVER['PHP_SELF'], 'wp-admin'));
+function uf_plugin_framework_uri() {
+	return site_url('index.php');
 }
 
-function uf_plugin_framework_uri() {
-	return get_bloginfo('url') . '/index.php';
+function uf_plugin_framework_admin_uri() {
+	return admin_url('admin.php');
+}
+
+function uf_plugin_framework_form_fields($uf_plugin_framework_plugin, $uf_plugin_framework_action, $padding = '') {
+?>
+<?php echo htmlspecialchars($padding); ?><input type="hidden" name="uf_plugin_framework_plugin" value="<?php echo htmlspecialchars($uf_plugin_framework_plugin); ?>" />
+<?php echo htmlspecialchars($padding); ?><input type="hidden" name="uf_plugin_framework_action" value="<?php echo htmlspecialchars($uf_plugin_framework_action); ?>" />
+<?php
+}
+
+function uf_plugin_framework_admin_form_fields($uf_plugin_framework_plugin, $uf_plugin_framework_action, $padding = '') {
+	echo htmlspecialchars($padding);
+	wp_nonce_field($uf_plugin_framework_plugin . '-' . $uf_plugin_framework_action);
+	echo "\n";
+	uf_plugin_framework_form_fields($uf_plugin_framework_plugin, $uf_plugin_framework_action, $padding);
 }
 ?>
