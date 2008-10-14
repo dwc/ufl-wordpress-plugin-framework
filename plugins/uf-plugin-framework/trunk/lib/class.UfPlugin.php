@@ -50,6 +50,13 @@ if (! class_exists('UfPlugin')) {
 		}
 
 		/*
+		 * Return the path to this plugin's management page.
+		 */
+		function get_plugin_page() {
+			return basename(dirname($this->plugin_file)) . '/' . basename($this->plugin_file);
+		}
+
+		/*
 		 * Ensure the specified directory exists in the
 		 * wp-content directory and return the full path.
 		 */
