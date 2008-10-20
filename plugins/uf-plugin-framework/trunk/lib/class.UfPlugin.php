@@ -32,7 +32,8 @@ if (! class_exists('UfPlugin')) {
 		 * Attach to WordPress plugin hooks (actions and filters).
 		 */
 		function add_plugin_hooks() {
-			if (isset($_GET['activate']) and $_GET['activate'] == 'true') {
+			if (isset($_GET['activate']) and $_GET['activate'] == 'true'
+			    or isset($_GET['activate-multi']) and $_GET['activate-multi'] == 'true') {
 				add_action('init', array(&$this, 'init'));
 			}
 			register_deactivation_hook($this->plugin_file, array(&$this, 'deactivate'));
