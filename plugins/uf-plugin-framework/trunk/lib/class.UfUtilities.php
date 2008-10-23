@@ -1,4 +1,8 @@
 <?php
+// For wp_generate_attachment_metadata
+require_once(ABSPATH . 'wp-admin/includes/image.php');
+
+
 /*
  * Utility functions for a UF WordPress plugin.
  */
