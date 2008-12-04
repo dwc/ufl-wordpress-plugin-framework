@@ -15,7 +15,7 @@ if (! class_exists('UfUtilities')) {
 		 * function does not exist, replace high-byte characters with
 		 * the specified character.
 		 */
-		function convert_charset($string, $to_charset, $replacement = ' ') {
+		function convert_charset($string, $to_charset = 'ASCII//TRANSLIT', $replacement = ' ') {
 			$output = '';
 			if (function_exists('iconv')) {
 				$output = iconv(get_bloginfo('charset'), $to_charset, $string);
