@@ -12,8 +12,7 @@ if (! class_exists('UfPlugin')) {
 	class UfPlugin {
 		var $name;
 		var $plugin_file;
-		var $options_page;
-		var $management_page;
+		var $pages = array();
 		var $tables;
 
 		function UfPlugin($name, $plugin_file) {
@@ -107,6 +106,13 @@ if (! class_exists('UfPlugin')) {
 		}
 
 		/*
+		 * Add a page of the specific type to this plugin.
+		 */
+		function add_admin_page($page) {
+			$this->pages[] = $page;
+		}
+
+		/*
 		 * Add a table to this plugin. Note that this doesn't
 		 * actually add the table to the database; that is
 		 * handled on plugin activation.
@@ -170,12 +176,9 @@ if (! class_exists('UfPlugin')) {
 		 * Add the menu tabs for this plugin.
 		 */
 		function admin_menu() {
-			if ($this->options_page) {
-				add_options_page($this->name, $this->name, $this->options_page->capability, $this->plugin_file, array(&$this->options_page, 'display'));
-			}
-
-			if ($this->management_page) {
-				add_management_page($this->name, $this->name, $this->management_page->capability, $this->plugin_file, array(&$this->management_page, 'display'));
+			foreach ($this->pages as $page) {
+				$function_name = "add_{$page->type}_page";
+				call_user_func($function_name, $page->title, $page->title, $page->capability, $this->plugin_file, array($page, 'display'));
 			}
 		}
 	}

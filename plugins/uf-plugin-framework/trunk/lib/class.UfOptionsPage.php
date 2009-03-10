@@ -1,19 +1,18 @@
 <?php
+require_once('class.UfAdminPage.php');
+
+
 /*
  * An options page for a UF WordPress plugin.
  */
 if (! class_exists('UfOptionsPage')) {
-	class UfOptionsPage {
-		var $title;
-		var $description;
+	class UfOptionsPage extends UfAdminPage {
 		var $option_groups;
-		var $capability;
 
-		function UfOptionsPage($title, $description = '', $option_groups = array(), $capability = 'manage_options') {
-			$this->title = $title;
-			$this->description = $description;
+		function UfOptionsPage($title, $description = '', $option_groups = array()) {
 			$this->option_groups = $option_groups;
-			$this->capability = $capability;
+
+			$this->{get_parent_class(__CLASS__)}($title, $description, 'manage_options', 'options');
 		}
 
 		function display() {
@@ -57,7 +56,7 @@ if (! class_exists('UfOptionsPage')) {
     <input type="hidden" name="action" value="update" />
     <input type="hidden" name="page_options" value="<?php echo implode(",", $page_options); ?>" />
     <p class="submit">
-      <input type="submit" name="Submit" value="<?php _e('Update Options'); ?> &raquo;" />
+      <input type="submit" name="Submit" value="Update Options" class="button-primary" />
     </p>
   </form>
 <?php
