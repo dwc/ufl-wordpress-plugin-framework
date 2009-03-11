@@ -132,7 +132,6 @@ if (! class_exists('UfPlugin')) {
 		 */
 		function init() {
 			if (current_user_can('activate_plugins')) {
-				// XXX: Checking all pages for options isn't that clean
 				foreach ($this->pages as $page) {
 					$options = $page->option_groups;
 					if (is_array($options) and count($options) > 0) {
