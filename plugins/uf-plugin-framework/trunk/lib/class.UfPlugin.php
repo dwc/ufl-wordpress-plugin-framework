@@ -37,23 +37,43 @@ if (! class_exists('UfPlugin')) {
 			}
 			register_deactivation_hook($this->plugin_file, array(&$this, 'deactivate'));
 
-			add_action('admin_head', array(&$this, 'admin_head'));
+			add_action('wp_print_scripts', array(&$this, 'enqueue_scripts'));
+			add_action('wp_print_styles', array(&$this, 'enqueue_styles'));
 			add_action('admin_menu', array(&$this, 'admin_menu'));
+		}
+
+		/*
+		 * Return a handle for this plugin, which is the
+		 * sanitized name of the directory it's contained it.
+		 */
+		function get_plugin_handle() {
+			return sanitize_title_with_dashes(basename(dirname($this->plugin_file)));
 		}
 
 		/*
 		 * Return the path to the specified file in this
 		 * plugin's directory.
 		 */
-		function get_plugin_filename($filename) {
-			return dirname($this->plugin_file) . "/$filename";
+		function get_plugin_path($filename) {
+			return trailingslashit(dirname($this->plugin_file)) . $filename;
+		}
+
+		/*
+		 * Return the URL to the specified file in this
+		 * plugin's directory.
+		 */
+		function get_plugin_url($filename) {
+			$plugin_directory =  basename(dirname($this->plugin_file));
+			$url = trailingslashit(WP_PLUGIN_URL) . trailingslashit($plugin_directory) . $filename;
+
+			return $url;
 		}
 
 		/*
 		 * Return the path to this plugin's management page.
 		 */
 		function get_plugin_page() {
-			return basename(dirname($this->plugin_file)) . '/' . basename($this->plugin_file);
+			return trailingslashit(basename(dirname($this->plugin_file))) . basename($this->plugin_file);
 		}
 
 		/*
@@ -61,7 +81,7 @@ if (! class_exists('UfPlugin')) {
 		 * wp-content directory and return the full path.
 		 */
 		function make_content_directory($directory_name) {
-			$path = ABSPATH . "wp-content/$directory_name/";
+			$path = trailingslashit(WP_CONTENT_DIR) . $directory_name;
 			if (! wp_mkdir_p($path)) {
 				die('Error creating content directory');
 			}
@@ -158,17 +178,27 @@ if (! class_exists('UfPlugin')) {
 		/*
 		 * Add some CSS for the management pages.
 		 */
-		function admin_head() {
-			$files = array(
-				'plugin.css' => '<style type="text/css" media="screen">__DATA__</style>',
-				'plugin.js'  => '<script type="text/javascript">__DATA__</script>',
-			);
+		function enqueue_styles() {
+			// XXX: Extend to allow mulitple CSS files
+			$this->maybe_enqueue_file('plugin.css', 'wp_enqueue_style');
+		}
 
-			foreach ($files as $file => $html) {
-				$filename = $this->get_plugin_filename($file);
-				if (is_readable($filename)) {
-					print str_replace('__DATA__', "\n" . trim(file_get_contents($filename)) . "\n", $html) . "\n";
-				}
+		/*
+		 * Add some JavaScript for the management pages.
+		 */
+		function enqueue_scripts() {
+			// XXX: Extend to allow mulitple JavaScript files
+			$this->maybe_enqueue_file('plugin.js', 'wp_enqueue_script');
+		}
+
+		/*
+		 * Check if the specified plugin file exists, and call
+		 * the corresponding enqueue function if it does.
+		 */
+		function maybe_enqueue_file($filename, $enqueue_function) {
+			$path = $this->get_plugin_path($filename);
+			if (is_readable($path)) {
+				call_user_func($enqueue_function, $this->get_plugin_handle(), $this->get_plugin_url($filename));
 			}
 		}
 
@@ -177,8 +207,8 @@ if (! class_exists('UfPlugin')) {
 		 */
 		function admin_menu() {
 			foreach ($this->pages as $page) {
-				$function_name = "add_{$page->type}_page";
-				call_user_func($function_name, $page->title, $page->title, $page->capability, $this->plugin_file, array($page, 'display'));
+				$add_page_function = "add_{$page->type}_page";
+				call_user_func($add_page_function, $page->title, $page->title, $page->capability, $this->plugin_file, array($page, 'display'));
 			}
 		}
 	}
