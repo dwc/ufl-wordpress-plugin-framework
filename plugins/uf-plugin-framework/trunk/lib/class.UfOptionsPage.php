@@ -24,7 +24,7 @@ if (! class_exists('UfOptionsPage')) {
 		<table class="form-table">
 <?php     foreach ($option_group->options as $option): ?>
 <?php         $page_options[] = $option->name; ?>
-<?php         $this->display_option($option); ?>
+<?php         $option->display(); ?>
 <?php     endforeach; ?>
 		</table><!-- .form-table -->
 <?php endforeach; ?>
@@ -36,27 +36,6 @@ if (! class_exists('UfOptionsPage')) {
 
 <?php $this->submit_button('Update Options'); ?>
 	</form>
-<?php
-		}
-
-		function display_option($option) {
-?>
-			<tr valign="top">
-				<th scope="row"><label for="<?php echo htmlspecialchars($option->name); ?>"><?php echo htmlspecialchars($option->description); ?></label></th>
-				<td>
-<?php         $option_value = get_option($option->name); ?>
-<?php         if (strpos($option_value, "\n") === false): ?>
-					<input type="text" name="<?php echo htmlspecialchars($option->name); ?>" id="<?php echo htmlspecialchars($option->name); ?>" value="<?php echo htmlspecialchars($option_value); ?>" size="40" /><?php echo htmlspecialchars($option->units ? ' ' . $option->units : ''); ?>
-<?php         else: ?>
-					<textarea name="<?php echo htmlspecialchars($option->name); ?>" id="<?php echo htmlspecialchars($option->name); ?>" rows="10" cols="40"><?php echo htmlspecialchars($option_value); ?></textarea>
-<?php         endif; ?>
-<?php         if ($option->default_value): ?>
-
-					<br />
-					Default is <code><?php echo htmlspecialchars($option->default_value); ?></code>
-<?php         endif; ?>
-				</td>
-			</tr>
 <?php
 		}
 	}
