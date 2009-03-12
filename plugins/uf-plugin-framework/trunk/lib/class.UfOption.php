@@ -40,10 +40,7 @@ if (! class_exists('UfOption')) {
 
 			$option_value = get_option($this->name);
 			$this->display_value_body($option_value);
-
-			if ($this->default_value) {
-				$this->display_value_default();
-			}
+			$this->display_value_default();
 
 			$this->display_value_end();
 		}
@@ -65,10 +62,12 @@ if (! class_exists('UfOption')) {
 		}
 
 		function display_value_default() {
+			if ($this->default_value) {
 ?>
 					<br />
 					Default is <code><?php echo htmlspecialchars($this->default_value); ?></code>
 <?php
+			}
 		}
 
 		function display_value_end() {

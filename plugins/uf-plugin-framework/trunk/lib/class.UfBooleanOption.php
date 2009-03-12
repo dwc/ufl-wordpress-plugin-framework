@@ -12,6 +12,13 @@ if (! class_exists('UfBooleanOption')) {
 					<input type="checkbox" name="<?php echo htmlspecialchars($this->name); ?>" id="<?php echo htmlspecialchars($this->name); ?>" value="1"<?php if ($value): ?> checked="checked"<?php endif; ?> />
 <?php
 		}
+
+		function display_value_default() {
+?>
+					<br />
+					Default is <code><?php echo htmlspecialchars($this->default_value ? 'true' : 'false'); ?></code>
+<?php
+		}
 	}
 }
 ?>
