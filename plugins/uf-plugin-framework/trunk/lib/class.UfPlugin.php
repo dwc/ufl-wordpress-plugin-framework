@@ -208,7 +208,8 @@ if (! class_exists('UfPlugin')) {
 		function admin_menu() {
 			foreach ($this->pages as $page) {
 				$add_page_function = "add_{$page->type}_page";
-				call_user_func($add_page_function, $page->title, $page->title, $page->capability, $this->plugin_file, array($page, 'display'));
+				$page_name = $this->plugin_file . '_' . $page->type;
+				call_user_func($add_page_function, $page->title, $page->title, $page->capability, $page_name, array($page, 'display'));
 			}
 		}
 	}
