@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: UF Plugin Framework
-Version: 2.0
+Version: 2.5
 Plugin URI: http://www.webadmin.ufl.edu/
 Description: Generic plugin framework for WordPress sites at the University of Florida.
 Author: Daniel Westermann-Clark
