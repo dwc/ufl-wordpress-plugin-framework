@@ -72,8 +72,8 @@ if (! class_exists('UfPlugin')) {
 		/*
 		 * Return the path to this plugin's management page.
 		 */
-		function get_plugin_page() {
-			return trailingslashit(basename(dirname($this->plugin_file))) . basename($this->plugin_file);
+		function get_plugin_page($type) {
+			return trailingslashit(basename(dirname($this->plugin_file))) . basename($this->plugin_file) . '_' . $type;
 		}
 
 		/*
@@ -208,7 +208,7 @@ if (! class_exists('UfPlugin')) {
 		function admin_menu() {
 			foreach ($this->pages as $page) {
 				$add_page_function = "add_{$page->type}_page";
-				$page_name = $this->plugin_file . '_' . $page->type;
+				$page_name = $this->get_plugin_page($page->type);
 				call_user_func($add_page_function, $page->title, $page->title, $page->capability, $page_name, array($page, 'display'));
 			}
 		}
