@@ -71,6 +71,9 @@ if (! class_exists('UfPlugin')) {
 
 		/*
 		 * Return the path to this plugin's management page.
+		 *
+		 * XXX: Consider handling the mapping from page to WordPress admin_url
+		 * (see e.g. uf-news-podcasts plugin)
 		 */
 		function get_plugin_page($type) {
 			return trailingslashit(basename(dirname($this->plugin_file))) . basename($this->plugin_file) . '_' . $type;
