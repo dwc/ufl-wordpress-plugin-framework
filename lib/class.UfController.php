@@ -13,7 +13,7 @@ if (! class_exists('UfController')) {
 				$query_parts = array();
 				parse_str($url_parts['query'], $query_parts);
 
-				$query_form = array_merge($query_parts, $query_form);
+				$query_form = array_merge($query_form, $query_parts);
 			}
 
 			$url_parts['query'] = $this->_build_query($query_form);
