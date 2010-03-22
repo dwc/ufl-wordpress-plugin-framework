@@ -37,8 +37,8 @@ if (! class_exists('UfPlugin')) {
 			}
 			register_deactivation_hook($this->plugin_file, array(&$this, 'deactivate'));
 
-			add_action('wp_print_scripts', array(&$this, 'enqueue_scripts'));
-			add_action('wp_print_styles', array(&$this, 'enqueue_styles'));
+			add_action('admin_print_scripts', array(&$this, 'enqueue_scripts'));
+			add_action('admin_print_styles', array(&$this, 'enqueue_styles'));
 			add_action('admin_menu', array(&$this, 'admin_menu'));
 		}
 
